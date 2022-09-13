@@ -1,4 +1,4 @@
-<img src="../lnPoSTdisplay/images/tdisplay.png?raw=true">
+<img src="images/tdisplay.png?raw=true">
 
 <h1>
 LNPoS
