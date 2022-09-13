@@ -17,6 +17,10 @@ LNPoS includes:
 
 Original <a href="https://twitter.com/arcbtc/status/1484942260013838336">demo</a>
 
+Video tutorial <a href="https://www.youtube.com/watch?v=rOmO3GhsPts">https://www.youtube.com/watch?v=rOmO3GhsPts</a>
+
+Assembling case, battery and keypad hat <a href="https://www.youtube.com/watch?v=oVwm95j3NXk">https://www.youtube.com/watch?v=oVwm95j3NXk</a>
+
 Join our telegram group <a href="https://t.me/makerbits">MakerBits</a>
 
 <h2>
@@ -67,19 +71,6 @@ Launch portal and enter the string from the LNURLDevice extension on LNbits
 <img src="images/lnurlatm.png?raw=true" width="75%">
 
 <br></br>
-
-<h2>
-LNPoS Options
-</h2>
-<h3>
- <ul>
-  <li><a href="lnPoSTdisplay">LNPoSTdisplay</a> $15</li>
-  </ul>  
- </h3>
-
-Video tutorial <a href="https://www.youtube.com/watch?v=rOmO3GhsPts">https://www.youtube.com/watch?v=rOmO3GhsPts</a>
-
-Assembling case, battery and keypad hat <a href="https://www.youtube.com/watch?v=oVwm95j3NXk">https://www.youtube.com/watch?v=oVwm95j3NXk</a>
 
 Purchasing:
 - The Lilygo <a href="https://www.aliexpress.com/item/33048962331.html">Tdisplay</a> is a cheap and small ESP32/screen development board.
