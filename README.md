@@ -6,7 +6,6 @@ LNPoS
 
 ## Free and open-source bitcoin point-of-sale (includes device portal for easy setup!)
 
-> Currently (until a merge of all versions into one codebase), the hardware version <a href="/lnPoSTdisplay">TDisplay</a> is the most maintained and recommended.
 
 LNPoS includes:
 
@@ -74,8 +73,6 @@ LNPoS Options
 </h2>
 <h3>
  <ul>
-  <li><a href="lnPoSM5Stack">LNPoSM5Stack</a> $70</li>
   <li><a href="lnPoSTdisplay">LNPoSTdisplay</a> $15</li>
-  <li><a href="lnPoSBareBones">LNPoSBareBones</a> $8</li>
   </ul>  
  </h3>
