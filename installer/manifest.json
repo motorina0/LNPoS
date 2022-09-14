@@ -1,7 +1,7 @@
 {
-  "name": "LNbits HWW",
+  "name": "LNbits LNPoS",
   "version": "0.1",
-  "funding_url": "https://github.com/lnbits/hardware-wallet",
+  "funding_url": "https://github.com/lnbits/lnpos",
   "new_install_prompt_erase": true,
   "builds": [
     {
