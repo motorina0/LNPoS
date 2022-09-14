@@ -58,7 +58,7 @@ String qrData;
 String dataId;
 String addressNo;
 String pinToShow;
-const char menuItems[4][12] = {"LNPoS", "LNURLPoS", "OnChain", "LNURLATM"};
+const char menuItems[4][12] = {"LNPoS", "Offline PoS", "OnChain", "ATM"};
 int menuItemCheck[4] = {0, 0, 0, 0};
 String selection;
 int menuItemNo = 0;
@@ -488,11 +488,11 @@ void loop()
     {
       onchainMain();
     }
-    else if (selection == "LNURLPoS")
+    else if (selection == "Offline PoS")
     {
       lnurlPoSMain();
     }
-    else if (selection == "LNURLATM")
+    else if (selection == "ATM")
     {
       lnurlATMMain();
     }
@@ -1537,13 +1537,13 @@ void makeLNURL()
   }
 
   byte payload[51]; // 51 bytes is max one can get with xor-encryption
-  if (selection == "LNURLPoS")
+  if (selection == "Offline PoS")
   {
     size_t payload_len = xor_encrypt(payload, sizeof(payload), (uint8_t *)secretPoS.c_str(), secretPoS.length(), nonce, sizeof(nonce), randomPin, dataIn.toInt());
     preparedURL = baseURLPoS + "?p=";
     preparedURL += toBase64(payload, payload_len, BASE64_URLSAFE | BASE64_NOPADDING);
   }
-  else
+  else // ATM
   {
     size_t payload_len = xor_encrypt(payload, sizeof(payload), (uint8_t *)secretATM.c_str(), secretATM.length(), nonce, sizeof(nonce), randomPin, dataIn.toInt());
     preparedURL = baseURLATM + "?atm=1&p=";
