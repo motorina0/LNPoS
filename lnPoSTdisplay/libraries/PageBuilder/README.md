@@ -218,7 +218,7 @@ PageElement::PageElement(const __FlashStringHelper* mold, TokenVT source);
   ```c++
   String func1(PageArgument& args);
   String func2(PageArgument& args);
-  PageElement elem(html, {{"TOKEN1", func1}}, {"TOKEN2", func2}});
+  PageElement elem(html, {{"TOKEN1", func1}, {"TOKEN2", func2}});
   ```
   `mold` can also use external files placed on [LittleFS](https://arduino-esp8266.readthedocs.io/en/latest/filesystem.html#spiffs-and-littlefs) or [SPIFFS](https://arduino-esp8266.readthedocs.io/en/latest/filesystem.html#spiffs-and-littlefs). Since HTML consists of more strings, the program area may be smaller in sketches using many pages.  
   External files can have HTML source specified by `mold`. That file would be allocated on the LittleFS or SPIFFS file system. This allows you to reduce the sketch size and assign more capacity to the program.  
