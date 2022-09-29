@@ -125,69 +125,98 @@
                         </center>
                     </div>
 
-                    <div class="ud-hero-content wow fadeInUp" data-wow-delay=".2s">
+                    <div class="ud-hero-content wow fadeInUp">
 
-                        <input type="file" id="config-file-selector" class="ud-main-btn ud-white-btn" />
+                        <!-- <input type="file" id="config-file-selector" class="ud-main-btn ud-white-btn" /> -->
+
+
                         <div class="row ud-hero-buttons">
-                            
-                        </div>
-                        <div class="row ud-hero-buttons">
-                            <div class="col-12">
-                                <form class="ud-login-form">
+                            <div class="col-5">
+                                <div class="ud-login-form">
                                     <div class="ud-form-group">
                                         <label for="filePath">Config File Path:</label>
                                         <input type="email" name="filePath" placeholder="File Path" />
                                     </div>
+                                </div>
                             </div>
-                            <div clas="col">
-                                <select id="displayMode" class="ud-main-btn ud-white-btn">
-                                    <option value="ui">Show Input Fields</option>
-                                    <option value="text">Show Text Content</option>
-                                </select>
+                            <div class="col-3">
+                                <button type="submit" class="ud-main-btn ud-white-btn">
+                                    Download from Device
+                                </button>
                             </div>
+                            <div class="col-1"></div>
+                            <div class="col-3">
+                                <button class="ud-main-btn ud-white-btn">
+                                    Save to Device
+                                </button>
+                            </div>
+                        </div>
 
+                        <div class="row ud-hero-buttons">
                             <div class="col-12">
 
                                 <div class="ud-contact-form-wrapper">
-                                    <h3 class="ud-contact-form-title">Config</h3>
-
-                                    <div id="config-file-fields-group">
-                                        <label>No config</label>
-                                        <br/><br/>
-                                    </div>
-
-                                    <div id="config-file-text-group" style="display:none">
-                                        <div class="ud-form-group">
-                                            <label for="config-file-text">Config File Text Content</label>
-                                            <textarea name="config-file-text" id="config-file-text" rows="15"
-                                                placeholder="config values"></textarea>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <select id="displayMode" onchange="onDisplayModeChanged()" value="ui"
+                                                class="ud-main-btn">
+                                                <option value="ui">Input Fields Mode</option>
+                                                <option value="text">Text Content Mode</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-5"></div>
+                                        <div class="col-4">
+                                            <button type="submit" class="ud-main-btn ">
+                                                Upload Config File
+                                            </button>
                                         </div>
                                     </div>
 
-                                    <div class="ud-form-group mb-0">
-                                        <button type="submit" class="ud-main-btn" style="position: center;">
-                                            Save Config to Device
-                                        </button>
-                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div id="config-file-fields-group">
+                                                <br /><br />
+                                                <h3 class="ud-feature-title">No Config Data</h3>
 
+                                                <ul>
+                                                    <li>
+                                                        Upload a .properties file or
+                                                    </li>
+                                                    <li>
+                                                        Switch to 'Text Content Mode' to add new properties.
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+
+                                            <div id="config-file-text-group" style="display:none">
+                                                <div class="ud-form-group">
+                                                    <label for="config-file-text">Config File Text Content</label>
+                                                    <textarea name="config-file-text" id="config-file-text" rows="15"
+                                                        placeholder="Add a new entry of the form 'key=value'"
+                                                        style="border-top: 2px solid #f1f1f1;"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-
-
                         </div>
+
+
                     </div>
-
-
-
                 </div>
 
-                <div class="ud-hero-image wow fadeInUp" data-wow-delay=".25s">
-                    <img src="../images/tdisplay.png" alt="tdisplay-image" />
-                    <img src="../../assets/images/hero/dotted-shape.svg" alt="shape" class="shape shape-1" />
-                    <img src="../../assets/images/hero/dotted-shape.svg" alt="shape" class="shape shape-2" />
-                </div>
+
+
             </div>
+
+            <div class="ud-hero-image wow fadeInUp" data-wow-delay=".25s">
+                <img src="../images/tdisplay.png" alt="tdisplay-image" />
+                <img src="../../assets/images/hero/dotted-shape.svg" alt="shape" class="shape shape-1" />
+                <img src="../../assets/images/hero/dotted-shape.svg" alt="shape" class="shape shape-2" />
+            </div>
+        </div>
         </div>
         </div>
     </section>
@@ -513,6 +542,18 @@
                     <input type="text" name="${configField[0]}" id="${configField[0]}" value="${configField[1]}" placeholder="xxx" />
                 </div>
             `
+        }
+
+        function onDisplayModeChanged() {
+            const displayMode = document.getElementById("displayMode").value;
+            if (displayMode === 'ui') {
+                document.getElementById("config-file-fields-group").style.display = "block";
+                document.getElementById("config-file-text-group").style.display = "none";
+            } else {
+                document.getElementById("config-file-fields-group").style.display = "none";
+                document.getElementById("config-file-text-group").style.display = "block";
+            }
+            console.log('### displayMode', displayMode)
         }
     </script>
 </body>
