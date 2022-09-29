@@ -127,15 +127,13 @@
 
                     <div class="ud-hero-content wow fadeInUp">
 
-                        <!-- <input type="file" id="config-file-selector" class="ud-main-btn ud-white-btn" /> -->
-
-
                         <div class="row ud-hero-buttons">
                             <div class="col-5">
                                 <div class="ud-login-form">
                                     <div class="ud-form-group">
-                                        <label for="filePath">Config File Path:</label>
-                                        <input type="email" name="filePath" placeholder="File Path" />
+                                        <label for="config-file-path">Config File Path (on device):</label>
+                                        <input type="email" name="config-file-path" id="config-file-path"
+                                            placeholder="Config File Path (on device)" />
                                     </div>
                                 </div>
                             </div>
@@ -166,9 +164,12 @@
                                         </div>
                                         <div class="col-5"></div>
                                         <div class="col-4">
-                                            <button type="submit" class="ud-main-btn ">
+                                            <button onclick="document.getElementById('config-file-selector').click();"
+                                                class="ud-main-btn">
                                                 Upload Config File
                                             </button>
+                                            <input type="file" id="config-file-selector" style="display:none;"
+                                                class="ud-main-btn ud-white-btn" />
                                         </div>
                                     </div>
 
@@ -180,10 +181,10 @@
 
                                                 <ul>
                                                     <li>
-                                                        Upload a .properties file or
+                                                        Upload a .properties file
                                                     </li>
                                                     <li>
-                                                        Switch to 'Text Content Mode' to add new properties.
+                                                        Or switch to 'Text Content Mode' to add new properties
                                                     </li>
                                                 </ul>
 
@@ -506,7 +507,7 @@
 
     <script>
         // const configProperties = []
-        const configFieldsGroup = document.getElementById('config-file-fields-group');
+
         const configText = document.getElementById('config-file-text');
 
         if (window.FileList && window.File) {
@@ -515,45 +516,60 @@
                 for (const file of event.target.files) {
                     console.log('### file.name', file.name)
 
+                    const configFilePath = document.getElementById('config-file-path');
+                    configFilePath.value = configFilePath.value || file.name || ""
+
 
                     let reader = new FileReader()
                     reader.readAsText(file, "UTF-8");
-                    reader.onload = function (evt) {
-                        console.log('### file: ', evt.target.result)
-                        configText.value += evt.target.result
 
-                        configFieldsGroup.innerHTML = ""
-                        const configProperties = propsToField(evt.target.result)
-                        configProperties.forEach(cP => appendConfigField(cP))
+                    reader.onload = function (evt) {
+                        const data = evt.target.result
+                        configText.value = data
+                        updateInputFields(data)
                     }
                 }
             });
+        }
+
+        function updateInputFields(data) {
+            const configFieldsGroup = document.getElementById('config-file-fields-group');
+            configFieldsGroup.innerHTML = ""
+
+            const configProperties = propsToField(data)
+            configProperties.forEach(cP => configFieldsGroup.innerHTML += createConfigField(cP))
+        }
+
+        function updateConfigTextFromInputFields() {
+            const inputFields = document.getElementsByClassName("lnpos-input-field");
+            const props = Array.from(inputFields).map(field => `${field.id}=${field.value || ''}`)
+            configText.value = props.join('\n')
+            console.log('### x', props)
         }
 
         function propsToField(text = '') {
             const lines = text.split('\n')
             return lines.map(l => l.split('='))
         }
-        function appendConfigField(configField) {
-            console.log('### configField', configField)
-            configFieldsGroup.innerHTML += `
-                <div class="ud-form-group">
-                    <label for="${configField[0]}">${configField[0]}</label>
-                    <input type="text" name="${configField[0]}" id="${configField[0]}" value="${configField[1]}" placeholder="xxx" />
-                </div>
-            `
+        function createConfigField(configField) {
+            return `<div class="ud-form-group">
+                <label for="${configField[0]}">${configField[0]}</label>
+                <input type="text" name="${configField[0]}" id="${configField[0]}" value="${configField[1] || ""}" placeholder="No value" class="lnpos-input-field" />
+             </div>`
         }
 
         function onDisplayModeChanged() {
             const displayMode = document.getElementById("displayMode").value;
+            console.log('### displayMode', displayMode)
             if (displayMode === 'ui') {
+                updateInputFields(configText.value)
                 document.getElementById("config-file-fields-group").style.display = "block";
                 document.getElementById("config-file-text-group").style.display = "none";
             } else {
+                updateConfigTextFromInputFields()
                 document.getElementById("config-file-fields-group").style.display = "none";
                 document.getElementById("config-file-text-group").style.display = "block";
             }
-            console.log('### displayMode', displayMode)
         }
     </script>
 </body>
