@@ -24,7 +24,8 @@
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://github.com/lnbits/lnpos" />
     <meta property="twitter:title" content="LNPoS - Free Open Source Bitcoin Onchain and Lightning Point of Sale" />
-    <meta property="twitter:description" content="LNPoS - Free Open Source Bitcoin Onchain and Lightning Point of Sale" />
+    <meta property="twitter:description"
+        content="LNPoS - Free Open Source Bitcoin Onchain and Lightning Point of Sale" />
     <meta property="twitter:image" content="https://i.imgur.com/0lakiYN.png" />
 
     <!--====== Favicon Icon ======-->
@@ -77,6 +78,7 @@
                 </div>
             </div>
         </div>
+
     </header>
     <!-- ====== Header End ====== -->
 
@@ -123,13 +125,70 @@
                         </center>
                     </div>
 
-                    <div class="ud-hero-image wow fadeInUp" data-wow-delay=".25s">
-                        <img src="../images/tdisplay.png" alt="tdisplay-image" />
-                        <img src="../../assets/images/hero/dotted-shape.svg" alt="shape" class="shape shape-1" />
-                        <img src="../../assets/images/hero/dotted-shape.svg" alt="shape" class="shape shape-2" />
+                    <div class="ud-hero-content wow fadeInUp" data-wow-delay=".2s">
+
+                        <input type="file" id="config-file-selector" class="ud-main-btn ud-white-btn" />
+                        <div class="row ud-hero-buttons">
+                            
+                        </div>
+                        <div class="row ud-hero-buttons">
+                            <div class="col-12">
+                                <form class="ud-login-form">
+                                    <div class="ud-form-group">
+                                        <label for="filePath">Config File Path:</label>
+                                        <input type="email" name="filePath" placeholder="File Path" />
+                                    </div>
+                            </div>
+                            <div clas="col">
+                                <select id="displayMode" class="ud-main-btn ud-white-btn">
+                                    <option value="ui">Show Input Fields</option>
+                                    <option value="text">Show Text Content</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+
+                                <div class="ud-contact-form-wrapper">
+                                    <h3 class="ud-contact-form-title">Config</h3>
+
+                                    <div id="config-file-fields-group">
+                                        <label>No config</label>
+                                        <br/><br/>
+                                    </div>
+
+                                    <div id="config-file-text-group" style="display:none">
+                                        <div class="ud-form-group">
+                                            <label for="config-file-text">Config File Text Content</label>
+                                            <textarea name="config-file-text" id="config-file-text" rows="15"
+                                                placeholder="config values"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="ud-form-group mb-0">
+                                        <button type="submit" class="ud-main-btn" style="position: center;">
+                                            Save Config to Device
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
                     </div>
+
+
+
+                </div>
+
+                <div class="ud-hero-image wow fadeInUp" data-wow-delay=".25s">
+                    <img src="../images/tdisplay.png" alt="tdisplay-image" />
+                    <img src="../../assets/images/hero/dotted-shape.svg" alt="shape" class="shape shape-1" />
+                    <img src="../../assets/images/hero/dotted-shape.svg" alt="shape" class="shape shape-2" />
                 </div>
             </div>
+        </div>
         </div>
     </section>
     <!-- ====== Hero End ====== -->
@@ -414,6 +473,47 @@
         }
 
         window.document.addEventListener("scroll", onScroll);
+    </script>
+
+    <script>
+        // const configProperties = []
+        const configFieldsGroup = document.getElementById('config-file-fields-group');
+        const configText = document.getElementById('config-file-text');
+
+        if (window.FileList && window.File) {
+            document.getElementById('config-file-selector').addEventListener('change', event => {
+                configText.innerHTML = '';
+                for (const file of event.target.files) {
+                    console.log('### file.name', file.name)
+
+
+                    let reader = new FileReader()
+                    reader.readAsText(file, "UTF-8");
+                    reader.onload = function (evt) {
+                        console.log('### file: ', evt.target.result)
+                        configText.value += evt.target.result
+
+                        configFieldsGroup.innerHTML = ""
+                        const configProperties = propsToField(evt.target.result)
+                        configProperties.forEach(cP => appendConfigField(cP))
+                    }
+                }
+            });
+        }
+
+        function propsToField(text = '') {
+            const lines = text.split('\n')
+            return lines.map(l => l.split('='))
+        }
+        function appendConfigField(configField) {
+            console.log('### configField', configField)
+            configFieldsGroup.innerHTML += `
+                <div class="ud-form-group">
+                    <label for="${configField[0]}">${configField[0]}</label>
+                    <input type="text" name="${configField[0]}" id="${configField[0]}" value="${configField[1]}" placeholder="xxx" />
+                </div>
+            `
+        }
     </script>
 </body>
 
