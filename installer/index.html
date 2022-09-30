@@ -509,6 +509,7 @@
         // const configProperties = []
 
         const configText = document.getElementById('config-file-text');
+        let configFormat = ''
 
         if (window.FileList && window.File) {
             document.getElementById('config-file-selector').addEventListener('change', event => {
@@ -526,13 +527,37 @@
                     reader.onload = function (evt) {
                         const data = evt.target.result
                         configText.value = data
+                        try {
+                            JSON.parse(data)
+                            configFormat = 'json'
+                        } catch (error) {
+                            configFormat = 'properties'
+                        }
                         updateInputFields(data)
+
                     }
                 }
             });
         }
 
         function updateInputFields(data) {
+            if (configFormat === 'json') {
+                return updateInputFieldsFromJson(data)
+            }
+            if (configFormat === 'properties') {
+                return updateInputFieldsFromProperties(data)
+            }
+        }
+
+        function updateInputFieldsFromJson(dataJson) {
+            const configFieldsGroup = document.getElementById('config-file-fields-group');
+            configFieldsGroup.innerHTML = ""
+
+            const data = JSON.parse(dataJson)
+            data.forEach(cP => configFieldsGroup.innerHTML += createConfigField(cP))
+        }
+
+        function updateInputFieldsFromProperties(data) {
             const configFieldsGroup = document.getElementById('config-file-fields-group');
             configFieldsGroup.innerHTML = ""
 
@@ -541,20 +566,60 @@
         }
 
         function updateConfigTextFromInputFields() {
+            if (configFormat === 'properties') {
+                return updateConfigPropertiesFromInputFields()
+            }
+            if (configFormat === 'json') {
+                return updateConfigJsonFromInputFields()
+            }
+        }
+
+        function updateConfigPropertiesFromInputFields() {
             const inputFields = document.getElementsByClassName("lnpos-input-field");
             const props = Array.from(inputFields).map(field => `${field.id}=${field.value || ''}`)
             configText.value = props.join('\n')
         }
 
+        function updateConfigJsonFromInputFields() {
+            const inputFields = document.getElementsByClassName("lnpos-input-field");
+            
+            const uiData = Array.from(inputFields) .map(field => ({ name: field.id, value: field.value }))
+            const data = JSON.parse(configText.value)
+            data.map(item => {
+                const updatedItem = uiData.find(uiEl => uiEl.name === item.name) || {}
+                return Object.assign(item, updatedItem)
+            })
+            configText.value = JSON.stringify(data, null, 2)
+        }
+
         function propsToField(text = '') {
             const lines = text.split('\n')
-            return lines.map(l => l.split('='))
+            return lines.map(l => {
+                const [name, value] = l.split('=')
+                return { name, value, label: name, type: 'ACInput', apply: 'text', placeholder: 'No value' }
+            })
         }
+
         function createConfigField(configField) {
-            return `<div class="ud-form-group">
-                <label for="${configField[0]}">${configField[0]}</label>
-                <input type="text" name="${configField[0]}" id="${configField[0]}" value="${configField[1] || ""}" placeholder="No value" class="lnpos-input-field" />
-             </div>`
+            console.log('### createConfigField', configField)
+            const elements = createConfigElement(configField)
+            return `<div class="ud-form-group">${elements}</div>`
+        }
+
+        function createConfigElement(configField) {
+            if (configField.type === 'ACInput') {
+                return `<label for="${configField.name}">${configField.label}</label>
+                        <input type="${configField.apply}" 
+                            name="${configField.name}" 
+                            id="${configField.name}" 
+                            value="${configField.value || ''}" 
+                            placeholder="${configField.placeholder || ''}" 
+                            class="lnpos-input-field" />`
+            }
+            if (configField.type === 'ACText' && configField.value) {
+                return `<h4 class="ud-feature-title">${configField.value}</h4>`
+            }
+            return ""
         }
 
         function onDisplayModeChanged() {
