@@ -244,6 +244,11 @@ char keys[rows][cols] = {
 byte rowPins[rows] = {21, 27, 26, 22}; //connect to the row pinouts of the keypad
 byte colPins[cols] = {33, 32, 25};     //connect to the column pinouts of the keypad
 
+struct KeyValue {
+  String key;
+  String value;
+};
+
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, rows, cols);
 int checker = 0;
 char maxdig[20];
@@ -263,7 +268,7 @@ void setup()
   tft.setRotation(1);
   tft.invertDisplay(true);
 
-  logo();
+  logo(0);
 
   // load buttons
   h.begin();
@@ -272,6 +277,9 @@ void setup()
   if(format == true){
     SPIFFS.format(); 
   }
+
+  waitForConfig(10);
+
   // get the saved details and store in global variables
   File paramFile = FlashFS.open(PARAM_FILE, "r");
   if (paramFile)
@@ -1184,7 +1192,7 @@ void lnurlInputScreen()
   tft.print(String(currency) + ":");
 }
 
-void logo()
+void logo(int counter)
 {
   tft.fillScreen(TFT_BLACK);
   tft.setTextColor(TFT_ORANGE, TFT_BLACK);
@@ -1193,9 +1201,12 @@ void logo()
   tft.print("LN");
   tft.setTextColor(TFT_PURPLE, TFT_BLACK);
   tft.print("PoS");
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  if (counter != 0) {
+    tft.print("  " + String(counter));
+  }
   tft.setTextSize(2);
   tft.setCursor(0, 80);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.print("Powered by LNbits");
 }
 
@@ -1787,27 +1798,27 @@ bool isPoweredExternally() {
  */
 void sleepAnimation() {
     printSleepAnimationFrame("(o.o)", 500);
-    printSleepAnimationFrame("(-.-)", 500);
-    printSleepAnimationFrame("(-.-)z", 250);
-    printSleepAnimationFrame("(-.-)zz", 250);
-    printSleepAnimationFrame("(-.-)zzz", 250);
-    tft.fillScreen(TFT_BLACK);
+printSleepAnimationFrame("(-.-)", 500);
+printSleepAnimationFrame("(-.-)z", 250);
+printSleepAnimationFrame("(-.-)zz", 250);
+printSleepAnimationFrame("(-.-)zzz", 250);
+tft.fillScreen(TFT_BLACK);
 }
 
 void wakeAnimation() {
-    printSleepAnimationFrame("(-.-)", 100);
-    printSleepAnimationFrame("(o.o)", 200);
-    tft.fillScreen(TFT_BLACK);
+  printSleepAnimationFrame("(-.-)", 100);
+  printSleepAnimationFrame("(o.o)", 200);
+  tft.fillScreen(TFT_BLACK);
 }
 
 /**
- * Print the line of the animation
- */
+   Print the line of the animation
+*/
 void printSleepAnimationFrame(String text, int wait) {
   tft.fillScreen(TFT_BLACK);
   tft.setCursor(5, 80);
   tft.setTextSize(4);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK); 
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
   //tft.setFreeFont(BIGFONT);
   tft.println(text);
   delay(wait);
