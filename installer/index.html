@@ -181,7 +181,7 @@
 
                                                 <ul>
                                                     <li>
-                                                        Upload a .properties file
+                                                        Upload a <code>.properties</code>' or <code>.json</code> file
                                                     </li>
                                                     <li>
                                                         Or switch to 'Text Content Mode' to add new properties
@@ -544,7 +544,6 @@
             const inputFields = document.getElementsByClassName("lnpos-input-field");
             const props = Array.from(inputFields).map(field => `${field.id}=${field.value || ''}`)
             configText.value = props.join('\n')
-            console.log('### x', props)
         }
 
         function propsToField(text = '') {
