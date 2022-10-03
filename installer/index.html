@@ -125,33 +125,7 @@
                         </center>
                     </div>
 
-
-
-
                     <div class="ud-hero-content wow fadeInUp">
-                        <div class="row ud-hero-buttons">
-
-                            <div class="col-2">
-                                <label class="switch">
-
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-
-                                </label>
-
-
-
-                            </div>
-
-                            <div class="col-2">
-                                <p class="ud-hero-desc">Configure</p>
-                            </div>
-                            <div class="col-8">
-                                <button onclick="openSerialPort()" class="ud-main-btn ud-white-btn">
-                                    Connect
-                                </button>
-                            </div>
-                        </div>
                         <div class="row ud-hero-buttons">
                             <div class="col-5">
                                 <div class="ud-login-form">
@@ -181,11 +155,17 @@
                                 <div class="ud-contact-form-wrapper">
                                     <div class="row">
                                         <div class="col-3">
-                                            <select id="displayMode" onchange="onDisplayModeChanged()" value="ui"
+                                            <!-- <select id="displayMode" onchange="onDisplayModeChanged()" value="ui"
                                                 class="ud-main-btn">
                                                 <option value="ui">Input Fields Mode</option>
                                                 <option value="text">Text Content Mode</option>
-                                            </select>
+                                            </select> -->
+                                            <label class="switch">
+                                                <input id="displayMode" onclick="onDisplayModeChanged()" type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                            <!-- <label class="ud-hero-desc">xxxxx</label> -->
+                                            <label class="ud-feature-title">Text Mode</label>
                                         </div>
                                         <div class="col-5"></div>
                                         <div class="col-4">
@@ -546,6 +526,7 @@
             } catch (error) {
                 configFormat = 'properties'
             }
+            // todo add propeties check; add text config
             updateInputFields(data)
         }
 
@@ -654,9 +635,9 @@
         }
 
         function onDisplayModeChanged() {
-            const displayMode = document.getElementById("displayMode").value;
-            console.log('### displayMode', displayMode)
-            if (displayMode === 'ui') {
+            const showText = document.getElementById("displayMode").checked;
+            console.log('### showText', showText)
+            if (showText === false) {
                 updateConfigText(configText.value)
                 document.getElementById("config-file-fields-group").style.display = "block";
                 document.getElementById("config-file-text-group").style.display = "none";
