@@ -278,8 +278,6 @@ void setup()
     SPIFFS.format(); 
   }
 
-  waitForConfig(10);
-
   // get the saved details and store in global variables
   File paramFile = FlashFS.open(PARAM_FILE, "r");
   if (paramFile)
@@ -360,8 +358,12 @@ void setup()
 
   // start portal (any key pressed on startup)
   const char key = keypad.getKey();
-  if (key != NO_KEY)
-  {
+  Serial.println("### Key: " + String(key));
+  Serial.println("### Key is 1: " + String(key == '1'));
+
+  if (key == '1') {
+    waitForConfig(0);
+  } else if (key != NO_KEY){
     // handle access point traffic
     server.on("/", []() {
       String content = "<h1>LNPoS</br>Free open-source bitcoin PoS</h1>";

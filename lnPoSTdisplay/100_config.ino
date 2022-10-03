@@ -3,22 +3,22 @@ unsigned long deviceStartTime =  millis();
 
 void waitForConfig(int seconds) {
   // wait for commands on serial
-  unsigned long  configWaitTime = millis();
-  int counter = seconds;
+  // unsigned long  configWaitTime = millis();
+  // int counter = seconds;
 
-  while (Serial.available() == 0) {
-    if ((millis() - deviceStartTime) > seconds * 1000) {
-      // config time over
-      Serial.println("Config time expired");
-      return;
-    }
-    if (millis() - configWaitTime > 1000) {
-      logo(--counter);
-      configWaitTime = millis();
-      Serial.println("configWaitTime: " + String(configWaitTime));
-    }
-  }
-  processing("Open for config");
+  // while (Serial.available() == 0) {
+  //   if ((millis() - deviceStartTime) > seconds * 1000) {
+  //     // config time over
+  //     Serial.println("Config time expired");
+  //     return;
+  //   }
+  //   if (millis() - configWaitTime > 1000) {
+  //     logo(--counter);
+  //     configWaitTime = millis();
+  //     Serial.println("configWaitTime: " + String(configWaitTime));
+  //   }
+  // }
+  processing("Config over Serial");
   executeConfig();
 }
 
@@ -43,10 +43,6 @@ void executeCommand(String commandName, String commandData) {
   KeyValue kv = extractKeyValue(commandData);
   String path = kv.key;
   String data = kv.value;
-
-  Serial.println("check point 1 ");
-  Serial.println("check point 2 " + commandName);
-  Serial.println("check point 3 " + commandData);
 
   if (commandName == "/file-remove") {
     return removeFile(path);
