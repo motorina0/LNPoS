@@ -850,13 +850,21 @@ void getKeypad(bool isATMPin, bool justKey, bool isLN, bool isATMNum)
 }
 
 ///////////DISPLAY///////////////
-void portalLaunch()
+void portalLaunch(){
+  configLaunch("AP LAUNCHED");
+}
+
+void serialLaunch(){
+  configLaunch("USB Config");
+}
+
+void configLaunch(String title)
 {
   tft.fillScreen(TFT_BLACK);
   tft.setTextColor(TFT_PURPLE, TFT_BLACK);
   tft.setTextSize(3);
-  tft.setCursor(20, 40);
-  tft.println("AP LAUNCHED");
+  tft.setCursor(20, 30);
+  tft.println(title);
 
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setCursor(0, 65);

@@ -1,24 +1,5 @@
-unsigned long deviceStartTime =  millis();
-
-
 void waitForConfig(int seconds) {
-  // wait for commands on serial
-  // unsigned long  configWaitTime = millis();
-  // int counter = seconds;
-
-  // while (Serial.available() == 0) {
-  //   if ((millis() - deviceStartTime) > seconds * 1000) {
-  //     // config time over
-  //     Serial.println("Config time expired");
-  //     return;
-  //   }
-  //   if (millis() - configWaitTime > 1000) {
-  //     logo(--counter);
-  //     configWaitTime = millis();
-  //     Serial.println("configWaitTime: " + String(configWaitTime));
-  //   }
-  // }
-  processing("Config over Serial");
+  serialLaunch();
   executeConfig();
 }
 
