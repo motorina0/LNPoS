@@ -135,7 +135,7 @@ function onToggleConfig(cb) {
     const configDivs = document.getElementsByClassName("lnpos-config-div");
     Array.from(configDivs).forEach(div => {
         if (cb.checked) {
-            // showMessage("To enter config mode: reboot device then press & hold '1'")
+            alert("To enter config mode: reboot device then press & hold '1'")
             div.classList.add('d-flex')
             div.classList.remove('d-none')
         } else {
