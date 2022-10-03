@@ -146,6 +146,20 @@ function onToggleConfig(cb) {
     })
 }
 
+function updateTemplate(templateDropwdown) {
+    const templateName = templateDropwdown.value
+    console.log('#### templateName', templateName)
+    const template = templates[templateName]
+    if (!template) {
+        alert('No template found!')
+        return
+    }
+    configText.value = template.value
+    const configFilePath = document.getElementById('config-file-path');
+    configFilePath.value = template.fileName || ""
+    refreshDataView()
+}
+
 
 function showMessage(message, sec = 10) {
     document.getElementById("message-div").classList.remove('d-none')

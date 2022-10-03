@@ -197,7 +197,7 @@
                             <div class="col-12">
 
                                 <div class="ud-contact-form-wrapper">
-                                    <div class="row">
+                                    <div class="row ud-hero-buttons">
                                         <div class="col-3 mt-3">
                                             <label class="switch">
                                                 <input id="display-mode" onclick="refreshDataView()" type="checkbox">
@@ -205,10 +205,17 @@
                                             </label>
                                             <label class="ud-feature-title">Text Mode</label>
                                         </div>
-                                        <div class="col-5"></div>
+                                        <div class="col-3">
+                                            <select onchange="updateTemplate(this)" class="ud-main-btn">
+                                                <option value="" disabled selected>Select Template</option>
+                                                <option value="elements">Elements Config</option>
+                                                <option value="beskomat">Beskomat Config</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-2"></div>
                                         <div class="col-4">
                                             <button onclick="document.getElementById('config-file-selector').click();"
-                                                class="ud-main-btn">
+                                                class="ud-main-btn float-end">
                                                 Upload Config File
                                             </button>
                                             <input type="file" id="config-file-selector" style="display:none;"
@@ -236,7 +243,7 @@
                                             <div id="config-file-text-group" style="display:none">
                                                 <div class="ud-form-group">
                                                     <label for="config-file-text">Config File Text Content</label>
-                                                    <textarea name="config-file-text" id="config-file-text" rows="15"
+                                                    <textarea name="config-file-text" id="config-file-text" rows="15" cols="200"
                                                         placeholder="Add a new entry of the form 'key=value'"
                                                         style="border-top: 2px solid #f1f1f1;"></textarea>
                                                 </div>
@@ -506,6 +513,7 @@
     <script src="../../assets/js/wow.min.js"></script>
     <script src="../../assets/js/main.js"></script>
 
+    <script src="assets/js/templates.js"></script>
     <script src="assets/js/ui.js"></script>
     <script src="assets/js/serial.js"></script>
     <script src="assets/js/config.js"></script>

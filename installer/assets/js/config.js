@@ -30,8 +30,8 @@ function connectToDevice() {
     openSerialPort({ baudRate })
 }
 
-function updateBinVersion(versionDropdown){
+function updateBinVersion(versionDropdown) {
     const espInstallButton = document.getElementById("espInstallButton")
     espInstallButton.manifest = `./firmware/esp32/${versionDropdown.value}/manifest.json`;
-    console.log('### versionDropdown.value', versionDropdown.value)
 }
+
