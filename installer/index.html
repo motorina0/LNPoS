@@ -125,8 +125,33 @@
                         </center>
                     </div>
 
-                    <div class="ud-hero-content wow fadeInUp">
 
+
+
+                    <div class="ud-hero-content wow fadeInUp">
+                        <div class="row ud-hero-buttons">
+                            
+                            <div class="col-2">
+                                <label class="switch">
+                                   
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                   
+                                </label>
+                               
+
+
+                            </div>
+                            
+                            <div class="col-2">
+                                <p class="ud-hero-desc">Configure</p>
+                            </div>
+                            <div class="col-8">
+                                <button onclick="openSerialPort()" class="ud-main-btn ud-white-btn">
+                                    Connect
+                                </button>
+                            </div>
+                        </div>
                         <div class="row ud-hero-buttons">
                             <div class="col-5">
                                 <div class="ud-login-form">
@@ -138,7 +163,7 @@
                                 </div>
                             </div>
                             <div class="col-3">
-                                <button type="submit" class="ud-main-btn ud-white-btn">
+                                <button onclick="downloadFromDevice()" class="ud-main-btn ud-white-btn">
                                     Download from Device
                                 </button>
                             </div>
@@ -178,10 +203,7 @@
                                             <div id="config-file-fields-group">
                                                 <br /><br />
                                                 <h3 class="ud-feature-title">No Config Data</h3>
-                                                <label class="switch">
-                                                    <input type="checkbox" checked>
-                                                    <span class="slider round"></span>
-                                                  </label>
+
                                                 <ul>
                                                     <li>
                                                         Upload a <code>.properties</code>' or <code>.json</code> file
@@ -237,7 +259,7 @@
                         <p>
                             LNPoS includes:
                         </p>
-                        
+
                     </div>
                 </div>
             </div>
@@ -465,6 +487,8 @@
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/wow.min.js"></script>
     <script src="../../assets/js/main.js"></script>
+
+    <script src="assets/js/config.js"></script>
     <script>
         // ==== for menu scroll
         const pageLink = document.querySelectorAll(".ud-menu-scroll");
@@ -586,8 +610,8 @@
 
         function updateConfigJsonFromInputFields() {
             const inputFields = document.getElementsByClassName("lnpos-input-field");
-            
-            const uiData = Array.from(inputFields) .map(field => ({ name: field.id, value: field.value }))
+
+            const uiData = Array.from(inputFields).map(field => ({ name: field.id, value: field.value }))
             const data = JSON.parse(configText.value)
             data.map(item => {
                 const updatedItem = uiData.find(uiEl => uiEl.name === item.name) || {}
@@ -638,6 +662,10 @@
                 document.getElementById("config-file-fields-group").style.display = "none";
                 document.getElementById("config-file-text-group").style.display = "block";
             }
+        }
+
+        function downloadFromDevice() {
+            sendSerialData('/file-read elements.json')
         }
     </script>
 </body>
