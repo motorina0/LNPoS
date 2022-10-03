@@ -94,7 +94,9 @@ const readFromSerialPort = reader => {
     let fulliness = []
 
     const readStringUntil = async (separator = '\n') => {
-        if (fulliness.length) return fulliness.shift().trim()
+        if (fulliness.length) {
+            return { value: fulliness.shift().trim(), done: false }
+        }
         const chunks = []
         if (partialChunk) {
             // leftovers from previous read
@@ -120,15 +122,12 @@ const readFromSerialPort = reader => {
     return readStringUntil
 }
 
-function handleSerialPortResponse(command, data) {
-    console.log(command, '>', data)
+function handleSerialPortResponse(command, data = '') {
     if (command === '/file-read') {
         serialConfig.data += data
     }
     if (command === '/file-done') {
         const configText = document.getElementById('config-file-text');
-        serialConfig.data += data
         configText.value = serialConfig.data
     }
-    console.log("####configText.value", serialConfig.data)
 }
