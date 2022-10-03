@@ -130,19 +130,19 @@
 
                     <div class="ud-hero-content wow fadeInUp">
                         <div class="row ud-hero-buttons">
-                            
+
                             <div class="col-2">
                                 <label class="switch">
-                                   
+
                                     <input type="checkbox" checked>
                                     <span class="slider round"></span>
-                                   
+
                                 </label>
-                               
+
 
 
                             </div>
-                            
+
                             <div class="col-2">
                                 <p class="ud-hero-desc">Configure</p>
                             </div>
@@ -538,6 +538,16 @@
 
         const configText = document.getElementById('config-file-text');
         let configFormat = ''
+        function updateConfigText(data) {
+            configText.value = data
+            try {
+                JSON.parse(data)
+                configFormat = 'json'
+            } catch (error) {
+                configFormat = 'properties'
+            }
+            updateInputFields(data)
+        }
 
         if (window.FileList && window.File) {
             document.getElementById('config-file-selector').addEventListener('change', event => {
@@ -553,19 +563,11 @@
                     reader.readAsText(file, "UTF-8");
 
                     reader.onload = function (evt) {
-                        const data = evt.target.result
-                        configText.value = data
-                        try {
-                            JSON.parse(data)
-                            configFormat = 'json'
-                        } catch (error) {
-                            configFormat = 'properties'
-                        }
-                        updateInputFields(data)
-
+                        updateConfigText(evt.target.result)
                     }
                 }
             });
+
         }
 
         function updateInputFields(data) {
@@ -578,6 +580,7 @@
         }
 
         function updateInputFieldsFromJson(dataJson) {
+            console.log('### updateInputFieldsFromJson:  dataJson:', dataJson)
             const configFieldsGroup = document.getElementById('config-file-fields-group');
             configFieldsGroup.innerHTML = ""
 
@@ -654,7 +657,7 @@
             const displayMode = document.getElementById("displayMode").value;
             console.log('### displayMode', displayMode)
             if (displayMode === 'ui') {
-                updateInputFields(configText.value)
+                updateConfigText(configText.value)
                 document.getElementById("config-file-fields-group").style.display = "block";
                 document.getElementById("config-file-text-group").style.display = "none";
             } else {
@@ -665,6 +668,7 @@
         }
 
         function downloadFromDevice() {
+            serialConfig.data = ''
             sendSerialData('/file-read elements.json')
         }
     </script>

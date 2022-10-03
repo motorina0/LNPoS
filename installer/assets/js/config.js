@@ -127,7 +127,7 @@ function handleSerialPortResponse(command, data = '') {
         serialConfig.data += data
     }
     if (command === '/file-done') {
-        const configText = document.getElementById('config-file-text');
-        configText.value = serialConfig.data
+        updateConfigText(serialConfig.data)
+        serialConfig.data = ''
     }
 }
