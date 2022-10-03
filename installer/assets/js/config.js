@@ -29,3 +29,9 @@ function connectToDevice() {
     const baudRate = document.getElementById("baud-rate").value || 115200
     openSerialPort({ baudRate })
 }
+
+function updateBinVersion(versionDropdown){
+    const espInstallButton = document.getElementById("espInstallButton")
+    espInstallButton.manifest = `./firmware/esp32/${versionDropdown.value}/manifest.json`;
+    console.log('### versionDropdown.value', versionDropdown.value)
+}

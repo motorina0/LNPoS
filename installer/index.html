@@ -106,16 +106,24 @@
                             </div>
                             <div class="col-4">
                                 <!-- <esp-web-install-button id="installStableButton" manifest="manifest.json"> -->
-                                <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
-                                    data-placement="bottom" title="Stable Version">Flash Stable Version</button>
+                                <!-- <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
+                                    data-placement="bottom" title="Stable Version">Flash Stable Version</button> -->
                                 <!-- </esp-web-install-button> -->
+                                <select id="binVersionOption" onchange="updateBinVersion(this)" class="ud-main-btn ud-white-btn">
+                                    <option value="v0.1">Stable Version</option>
+                                    <option value="v0.2">Test Version</option>
+                                </select>
 
                             </div>
                             <div class="col-4">
                                 <!-- <esp-web-install-button id="installTestButton" manifest="manifest.test.json"> -->
-                                <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
-                                    data-placement="bottom" title="Test Version">Flash Test Version</button>
+                                <!-- <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
+                                    data-placement="bottom" title="Test Version">Flash Test Version</button> -->
                                 <!-- </esp-web-install-button> -->
+                                <esp-web-install-button id="espInstallButton" manifest="./firmware/esp32/v0.1/manifest.json">
+                                    <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
+                                        data-placement="bottom" title="Flasn">Flash</button>
+                                </esp-web-install-button>
                             </div>
                             <div class="col-2">
                                 <label class="switch float-end mt-2">
