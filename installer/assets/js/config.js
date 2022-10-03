@@ -124,7 +124,7 @@ const readFromSerialPort = reader => {
 
 function handleSerialPortResponse(command, data = '') {
     if (command === '/file-read') {
-        serialConfig.data += data
+        serialConfig.data += data + '\n'
     }
     if (command === '/file-done') {
         updateConfigText(serialConfig.data)

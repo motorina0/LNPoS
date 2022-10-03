@@ -90,7 +90,7 @@ void readFile(String path) {
   if (file) {
     while (file.available()) {
       String line = file.readStringUntil('\n');
-      Serial.print("/file-read" + line);
+      Serial.println("/file-read " + line);
     }
     file.close();
   }

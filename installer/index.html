@@ -96,42 +96,53 @@
                             Build from source code, or flash binaries directly from browser
 
                         </p>
-                        <center>
+                        <!-- <center> -->
                             <div style="max-width: 700px" class="row ud-hero-buttons">
-                                <div class="col">
+                                <div class="col-2">
                                     <a href="https://github.com/lnbits/LNPoS#lnpos" rel="nofollow noopener"
                                         class="ud-main-btn ud-white-btn">
                                         Github
                                     </a>
                                 </div>
-                                <div class="col">
+                                <div class="col-4">
                                     <!-- <esp-web-install-button id="installStableButton" manifest="manifest.json"> -->
                                     <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
                                         data-placement="bottom" title="Stable Version">Flash Stable Version</button>
                                     <!-- </esp-web-install-button> -->
 
                                 </div>
-                                <div class="col">
+                                <div class="col-4">
                                     <!-- <esp-web-install-button id="installTestButton" manifest="manifest.test.json"> -->
                                     <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
                                         data-placement="bottom" title="Test Version">Flash Test Version</button>
                                     <!-- </esp-web-install-button> -->
                                 </div>
+                                <div class="col-2">
+                                    <label class="switch float-end mt-2">
+                                        <input id="showConfigToggle" onclick="onToggleConfig(this)" type="checkbox">
+                                        <span class="slider round"></span>
+                                    </label>
+                                    <label class="ud-feature-title float-end">Config</label>
+                                </div>
                             </div>
-                            <center>
-                                <p> </p>
-                            </center>
-                        </center>
+                          
+                        <!-- </center> -->
                     </div>
 
                     <div class="ud-hero-content wow fadeInUp">
+                        <div id="message-div" class="row mb-3 mt-3 ud-hero-buttons d-none">
+                            <div class="col-12">
+                                <p id="message-text" class="ud-hero-desc " style="color:red">
+                                </p>
+                            </div>
+                        </div>
                         <div class="row mb-3 mt-3 ud-hero-buttons">
                             <div class="col-6">
-                                <label class="switch">
+                                <!-- <label class="switch">
                                     <input id="showConfigToggle" onclick="onToggleConfig(this)" type="checkbox">
                                     <span class="slider round"></span>
                                 </label>
-                                <label class="ud-feature-title">Show Config</label>
+                                <label class="ud-feature-title">Show Config</label> -->
                             </div>
                             <div class="col-4">
                                 <div class="ud-login-form float-end lnpos-config-div d-none">
@@ -167,7 +178,7 @@
                             </div>
                             <div class="col-1"></div>
                             <div class="col-3">
-                                <button class="ud-main-btn ud-white-btn">
+                                <button onclick="saveToDevice()" class="ud-main-btn ud-white-btn">
                                     Save to Device
                                 </button>
                             </div>
@@ -180,8 +191,7 @@
                                     <div class="row">
                                         <div class="col-3 mt-3">
                                             <label class="switch">
-                                                <input id="display-mode" onclick="onDisplayModeChanged()"
-                                                    type="checkbox">
+                                                <input id="display-mode" onclick="refreshDataView()" type="checkbox">
                                                 <span class="slider round"></span>
                                             </label>
                                             <label class="ud-feature-title">Text Mode</label>
@@ -589,6 +599,7 @@
         }
 
         function updateInputFieldsFromProperties(data) {
+            console.log('### updateInputFieldsFromProperties:  data:', data)
             const configFieldsGroup = document.getElementById('config-file-fields-group');
             configFieldsGroup.innerHTML = ""
 
@@ -624,7 +635,7 @@
         }
 
         function propsToField(text = '') {
-            const lines = text.split('\n')
+            const lines = text.split('\n').filter(line => line.length)
             return lines.map(l => {
                 const [name, value] = l.split('=')
                 return { name, value, label: name, type: 'ACInput', apply: 'text', placeholder: 'No value' }
@@ -653,7 +664,7 @@
             return ""
         }
 
-        function onDisplayModeChanged() {
+        function refreshDataView() {
             const showText = document.getElementById("display-mode").checked;
             if (showText === false) {
                 updateConfigText(configText.value)
@@ -676,6 +687,23 @@
             sendSerialData(`/file-read ${configFile}`)
         }
 
+        function saveToDevice() {
+            const configFile = document.getElementById("config-file-path").value
+            if (!configFile) {
+                alert('No file path specified!')
+                return
+            }
+            // todo: revisit
+            refreshDataView()
+            sendSerialData(`/file-remove ${configFile}`)
+            const lines = configText.value.split('\n')
+            console.log('### lines', lines)
+            lines.forEach(line => {
+                sendSerialData(`/file-append ${configFile} ${line}`)
+            })
+
+        }
+
 
         function onToggleConfig(cb) {
             const configDivs = document.getElementsByClassName("lnpos-config-div");
@@ -695,6 +723,19 @@
             const baudRate = document.getElementById("baud-rate").value || 115200
             openSerialPort({ baudRate })
         }
+
+        function showMessage(message, sec = 10) {
+            document.getElementById("message-div").classList.remove('d-none')
+            document.getElementById("message-text").innerText = message || ''
+            setTimeout(hideMessage, sec * 1000)
+        }
+
+        function hideMessage() {
+            document.getElementById("message-div").classList.add('d-none')
+        }
+
+        // showMessage("Some Error Message")
+
     </script>
 </body>
 
