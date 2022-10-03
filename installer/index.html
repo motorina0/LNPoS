@@ -155,7 +155,7 @@
                                 <div class="ud-login-form">
                                     <div class="ud-form-group">
                                         <label for="config-file-path">Config File Path (on device):</label>
-                                        <input type="email" name="config-file-path" id="config-file-path"
+                                        <input type="text" name="config-file-path" id="config-file-path"
                                             placeholder="Config File Path (on device)" />
                                     </div>
                                 </div>
@@ -180,7 +180,7 @@
                                     <div class="row">
                                         <div class="col-3 mt-3">
                                             <label class="switch">
-                                                <input id="displayMode" onclick="onDisplayModeChanged()"
+                                                <input id="display-mode" onclick="onDisplayModeChanged()"
                                                     type="checkbox">
                                                 <span class="slider round"></span>
                                             </label>
@@ -654,8 +654,7 @@
         }
 
         function onDisplayModeChanged() {
-            const showText = document.getElementById("displayMode").checked;
-            console.log('### showText', showText)
+            const showText = document.getElementById("display-mode").checked;
             if (showText === false) {
                 updateConfigText(configText.value)
                 document.getElementById("config-file-fields-group").style.display = "block";
@@ -668,8 +667,13 @@
         }
 
         function downloadFromDevice() {
+            const configFile = document.getElementById("config-file-path").value
+            if (!configFile) {
+                alert('No file path specified!')
+                return
+            }
             serialConfig.data = ''
-            sendSerialData('/file-read elements.json')
+            sendSerialData(`/file-read ${configFile}`)
         }
 
 
@@ -685,6 +689,11 @@
                 }
 
             })
+        }
+
+        function connectToDevice() {
+            const baudRate = document.getElementById("baud-rate").value || 115200
+            openSerialPort({ baudRate })
         }
     </script>
 </body>

@@ -51,7 +51,7 @@ async function openSerialPort(config = { baudRate: 115200 }) {
 
 function checkSerialPortSupported() {
     if (!navigator.serial) {
-        console.log('### Serial port communication not supported!')
+        alert('Serial port communication not supported!')
         return false
     }
     return true
