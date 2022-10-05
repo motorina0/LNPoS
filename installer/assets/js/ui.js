@@ -22,8 +22,6 @@ if (window.FileList && window.File) {
     document.getElementById('config-file-selector').addEventListener('change', event => {
         configText.innerHTML = '';
         for (const file of event.target.files) {
-            console.log('### file.name', file.name)
-
             const configFilePath = document.getElementById('config-file-path');
             configFilePath.value = configFilePath.value || file.name || ""
 
@@ -143,7 +141,7 @@ function refreshTextConfig() {
 
 function onToggleConfig(cb) {
     if (cb.checked) {
-        alert("To enter config mode: reboot device then press & hold '1'")
+        showMessage("To enter config mode: reboot the device then press & hold '1'")
     }
     const configDivs = document.getElementsByClassName("lnpos-config-div");
     Array.from(configDivs).forEach(div => {
@@ -162,7 +160,7 @@ function updateTemplate(templateDropwdown) {
     const templateName = templateDropwdown.value
     const template = templates[templateName]
     if (!template) {
-        alert('No template found!')
+        showMessage('No template found!')
         return
     }
     updateConfigUI(template.value + "") // make a copy
@@ -171,12 +169,8 @@ function updateTemplate(templateDropwdown) {
 }
 
 
-function showMessage(message, sec = 10) {
-    document.getElementById("message-div").classList.remove('d-none')
-    document.getElementById("message-text").innerText = message || ''
-    setTimeout(hideMessage, sec * 1000)
-}
+function showMessage(message) {
+    document.getElementById("show-modal-button").click()
+    document.getElementById("modal-text").innerText = message
 
-function hideMessage() {
-    document.getElementById("message-div").classList.add('d-none')
 }

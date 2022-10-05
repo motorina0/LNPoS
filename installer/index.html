@@ -96,47 +96,39 @@
                             Build from source code, or flash binaries directly from browser
 
                         </p>
-                        <!-- <center> -->
-                        <div style="max-width: 700px" class="row ud-hero-buttons">
-                            <div class="col-2">
-                                <a href="https://github.com/lnbits/LNPoS#lnpos" rel="nofollow noopener"
-                                    class="ud-main-btn ud-white-btn">
-                                    Github
-                                </a>
-                            </div>
-                            <div class="col-4">
-                                <!-- <esp-web-install-button id="installStableButton" manifest="manifest.json"> -->
-                                <!-- <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
-                                    data-placement="bottom" title="Stable Version">Flash Stable Version</button> -->
-                                <!-- </esp-web-install-button> -->
-                                <select id="binVersionOption" onchange="updateBinVersion(this)"
-                                    class="ud-main-btn ud-white-btn">
-                                    <option value="v0.1">Stable Version</option>
-                                    <option value="v0.2">Test Version</option>
-                                </select>
+                        <center>
+                            <div style="max-width: 700px" class="row ud-hero-buttons">
+                                <div class="col-2">
+                                    <a href="https://github.com/lnbits/LNPoS#lnpos" rel="nofollow noopener"
+                                        class="ud-main-btn ud-white-btn">
+                                        Github
+                                    </a>
+                                </div>
+                                <div class="col-4">
+                                    <select id="binVersionOption" onchange="updateBinVersion(this)"
+                                        class="ud-main-btn ud-white-btn">
+                                        <option value="v0.1">Stable Version</option>
+                                        <option value="v0.2">Test Version</option>
+                                    </select>
 
+                                </div>
+                                <div class="col-4">
+                                    <esp-web-install-button id="espInstallButton"
+                                        manifest="./firmware/esp32/v0.1/manifest.json">
+                                        <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
+                                            data-placement="bottom" title="Flasn">Flash</button>
+                                    </esp-web-install-button>
+                                </div>
+                                <div class="col-2">
+                                    <label class="switch float-end mt-2">
+                                        <input id="showConfigToggle" onclick="onToggleConfig(this)" type="checkbox">
+                                        <span class="slider round"></span>
+                                    </label>
+                                    <label class="ud-feature-title float-end">Config</label>
+                                </div>
                             </div>
-                            <div class="col-4">
-                                <!-- <esp-web-install-button id="installTestButton" manifest="manifest.test.json"> -->
-                                <!-- <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
-                                    data-placement="bottom" title="Test Version">Flash Test Version</button> -->
-                                <!-- </esp-web-install-button> -->
-                                <esp-web-install-button id="espInstallButton"
-                                    manifest="./firmware/esp32/v0.1/manifest.json">
-                                    <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
-                                        data-placement="bottom" title="Flasn">Flash</button>
-                                </esp-web-install-button>
-                            </div>
-                            <div class="col-2">
-                                <label class="switch float-end mt-2">
-                                    <input id="showConfigToggle" onclick="onToggleConfig(this)" type="checkbox">
-                                    <span class="slider round"></span>
-                                </label>
-                                <label class="ud-feature-title float-end">Config</label>
-                            </div>
-                        </div>
 
-                        <!-- </center> -->
+                        </center>
                     </div>
 
                     <div class="ud-hero-content wow fadeInUp">
@@ -506,6 +498,28 @@
             </div>
         </div>
     </footer>
+    <button id="show-modal-button" type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">LNPoS</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modal-text"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ====== Footer End ====== -->
 
     <!-- ====== Back To Top Start ====== -->

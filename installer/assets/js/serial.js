@@ -13,19 +13,19 @@ const sleep = ms => new Promise(r => setTimeout(r, ms))
 async function openSerialPort(config = { baudRate: 115200 }) {
     if (!checkSerialPortSupported()) return false
     if (serialConfig.selectedPort) {
-        console.log('### Already connected. Disconnect first!')
+        showMessage('Already connected. Disconnect first!')
         return true
     }
 
     try {
         serialConfig.selectedPort = await navigator.serial.requestPort()
         serialConfig.selectedPort.addEventListener('connect', event => {
-            console.log('### Connected from Serial Port!')
+            console.log('### Connected to Serial Port!')
         })
 
         serialConfig.selectedPort.addEventListener('disconnect', () => {
             serialConfig.selectedPort = null
-            console.log('### Disconnected from Serial Port!')
+            showMessage('Disconnected from Serial Port!')
         })
 
         // Wait for the serial port to open.
@@ -41,16 +41,16 @@ async function openSerialPort(config = { baudRate: 115200 }) {
         )
 
         serialConfig.writer = textEncoder.writable.getWriter()
-
+        showMessage('Connected to serial port!')
     } catch (error) {
         serialConfig.selectedPort = null
-        console.log('### Cannot open serial port!')
+        showMessage('Cannot open serial port!')
     }
 }
 
 function checkSerialPortSupported() {
     if (!navigator.serial) {
-        alert('Serial port communication not supported!')
+        showMessage('Serial port communication not supported!')
         return false
     }
     return true
@@ -84,7 +84,7 @@ async function startSerialPortReading2() {
 
 async function sendSerialData(data) {
     if (!serialConfig.writer) {
-        alert("Not connected to device")
+        showMessage("Not connected to device")
         throw new Error("Not connected to device")
     }
     await serialConfig.writer.write(data + '\n')
