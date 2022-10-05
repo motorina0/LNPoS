@@ -44,9 +44,12 @@ async function saveToDevice(btn) {
 
 }
 
-function connectToDevice() {
+async function connectToDevice(btn) {
     const baudRate = document.getElementById("baud-rate").value || 115200
-    openSerialPort({ baudRate })
+    const connected = await openSerialPort({ baudRate })
+    if (connected === true) {
+        btn.value = 'Connected'
+    }
 }
 
 function updateBinVersion(versionDropdown) {

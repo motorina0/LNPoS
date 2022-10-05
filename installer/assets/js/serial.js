@@ -42,9 +42,11 @@ async function openSerialPort(config = { baudRate: 115200 }) {
 
         serialConfig.writer = textEncoder.writable.getWriter()
         showMessage('Connected to serial port!')
+        return true
     } catch (error) {
         serialConfig.selectedPort = null
         showMessage('Cannot open serial port!')
+        return false
     }
 }
 
