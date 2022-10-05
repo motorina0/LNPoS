@@ -1,11 +1,21 @@
-async function downloadFromDevice() {
+async function downloadFromDevice(btn) {
     const configFile = document.getElementById("config-file-path").value
     if (!configFile) {
         showMessage('No file path specified!')
         return
     }
-    serialConfig.data = ''
-    await sendSerialData(`/file-read ${configFile}`)
+    try {
+        btn.value = 'Downloading...'
+        await sleep(500)
+        serialConfig.data = ''
+        await sendSerialData(`/file-read ${configFile}`)
+    } catch (error) {
+        showMessage('Cannot download file: ' + configFile)
+    } finally {
+        await sleep(500)
+        btn.value = 'Download from Device'
+    }
+
 }
 
 async function saveToDevice(btn) {
