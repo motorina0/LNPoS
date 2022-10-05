@@ -268,7 +268,7 @@ void setup()
   tft.setRotation(1);
   tft.invertDisplay(true);
 
-  logo(0);
+  logo();
 
   // load buttons
   h.begin();
@@ -277,7 +277,6 @@ void setup()
   if(format == true){
     SPIFFS.format(); 
   }
-
   // get the saved details and store in global variables
   File paramFile = FlashFS.open(PARAM_FILE, "r");
   if (paramFile)
@@ -358,11 +357,8 @@ void setup()
 
   // start portal (any key pressed on startup)
   const char key = keypad.getKey();
-  Serial.println("### Key: " + String(key));
-  Serial.println("### Key is 1: " + String(key == '1'));
-
   if (key == '1') {
-    waitForConfig(0);
+    waitForConfig();
   } else if (key != NO_KEY){
     // handle access point traffic
     server.on("/", []() {
@@ -1202,7 +1198,7 @@ void lnurlInputScreen()
   tft.print(String(currency) + ":");
 }
 
-void logo(int counter)
+void logo()
 {
   tft.fillScreen(TFT_BLACK);
   tft.setTextColor(TFT_ORANGE, TFT_BLACK);
@@ -1212,9 +1208,6 @@ void logo(int counter)
   tft.setTextColor(TFT_PURPLE, TFT_BLACK);
   tft.print("PoS");
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
-  if (counter != 0) {
-    tft.print("  " + String(counter));
-  }
   tft.setTextSize(2);
   tft.setCursor(0, 80);
   tft.print("Powered by LNbits");

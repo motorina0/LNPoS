@@ -1,4 +1,4 @@
-void waitForConfig(int seconds) {
+void waitForConfig() {
   serialLaunch();
   executeConfig();
 }
@@ -38,9 +38,7 @@ void executeCommand(String commandName, String commandData) {
     Serial.println("readFile done");
     return;
   }
-  if (commandName == "/file-close") {
-    return closeFile(path);
-  }
+
   Serial.println("command unknown");
 }
 
@@ -73,10 +71,6 @@ void readFile(String path) {
   }
   Serial.println("");
   Serial.println("/file-done");
-}
-
-void closeFile(String path) {
-  Serial.println("closeFile: " + path);
 }
 
 
