@@ -1,4 +1,4 @@
-void waitForConfig() {
+void configOverSerialPort() {
   serialLaunch();
   executeConfig();
 }

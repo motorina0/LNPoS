@@ -358,7 +358,7 @@ void setup()
   // start portal (any key pressed on startup)
   const char key = keypad.getKey();
   if (key == '1') {
-    waitForConfig();
+    configOverSerialPort();
   } else if (key != NO_KEY){
     // handle access point traffic
     server.on("/", []() {
