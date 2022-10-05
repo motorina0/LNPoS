@@ -109,7 +109,8 @@
                                 <!-- <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
                                     data-placement="bottom" title="Stable Version">Flash Stable Version</button> -->
                                 <!-- </esp-web-install-button> -->
-                                <select id="binVersionOption" onchange="updateBinVersion(this)" class="ud-main-btn ud-white-btn">
+                                <select id="binVersionOption" onchange="updateBinVersion(this)"
+                                    class="ud-main-btn ud-white-btn">
                                     <option value="v0.1">Stable Version</option>
                                     <option value="v0.2">Test Version</option>
                                 </select>
@@ -120,7 +121,8 @@
                                 <!-- <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
                                     data-placement="bottom" title="Test Version">Flash Test Version</button> -->
                                 <!-- </esp-web-install-button> -->
-                                <esp-web-install-button id="espInstallButton" manifest="./firmware/esp32/v0.1/manifest.json">
+                                <esp-web-install-button id="espInstallButton"
+                                    manifest="./firmware/esp32/v0.1/manifest.json">
                                     <button slot="activate" class="ud-main-btn ud-white-btn" data-toggle="tooltip"
                                         data-placement="bottom" title="Flasn">Flash</button>
                                 </esp-web-install-button>
@@ -141,7 +143,7 @@
                         <div id="message-div" class="row mb-3 mt-3 ud-hero-buttons d-none">
                             <div class="col-12">
                                 <button slot="activate" class="ud-main-btn ud-white-btn w-100">
-                                    <p id="message-text" ></p>
+                                    <p id="message-text"></p>
                                 </button>
                             </div>
                         </div>
@@ -170,6 +172,7 @@
                             </div>
                         </div>
                         <hr class="mt-2 mb-3 lnpos-config-div d-none" />
+
                         <div class="row ud-hero-buttons lnpos-config-div d-none">
                             <div class="col-5">
                                 <div class="ud-login-form">
@@ -187,10 +190,13 @@
                             </div>
                             <div class="col-1"></div>
                             <div class="col-3">
-                                <button onclick="saveToDevice()" class="ud-main-btn ud-white-btn">
+                                <button onclick="saveToDevice(this)" class="ud-main-btn ud-white-btn">
                                     Save to Device
                                 </button>
                             </div>
+                        </div>
+                        <div id="progress-bar-top" class="progress mb-3 d-none">
+                            <div id="progress-bar-value" class="progress-bar" style="width:50%"></div>
                         </div>
 
                         <div class="row ud-hero-buttons lnpos-config-div d-none">
@@ -200,7 +206,8 @@
                                     <div class="row ud-hero-buttons">
                                         <div class="col-3 mt-3">
                                             <label class="switch">
-                                                <input id="display-mode" onclick="refreshDataView()" type="checkbox">
+                                                <input id="display-mode" onclick="onDisplayModeChamge()"
+                                                    type="checkbox">
                                                 <span class="slider round"></span>
                                             </label>
                                             <label class="ud-feature-title">Text Mode</label>
@@ -243,8 +250,8 @@
                                             <div id="config-file-text-group" style="display:none">
                                                 <div class="ud-form-group">
                                                     <label for="config-file-text">Config File Text Content</label>
-                                                    <textarea name="config-file-text" id="config-file-text" rows="15" cols="200"
-                                                        placeholder="Add a new entry of the form 'key=value'"
+                                                    <textarea name="config-file-text" id="config-file-text" rows="15"
+                                                        cols="200" placeholder="Add a new entry of the form 'key=value'"
                                                         style="border-top: 2px solid #f1f1f1;"></textarea>
                                                 </div>
                                             </div>
@@ -564,10 +571,10 @@
     <script>
 
 
-        
 
 
-    
+
+
 
 
     </script>

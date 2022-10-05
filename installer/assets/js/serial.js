@@ -33,7 +33,7 @@ async function openSerialPort(config = { baudRate: 115200 }) {
         // do not await
         startSerialPortReading2()
         // wait to init
-        sleep(1000)
+        await sleep(1000)
 
         const textEncoder = new TextEncoderStream()
         serialConfig.writableStreamClosed = textEncoder.readable.pipeTo(
@@ -70,7 +70,6 @@ async function startSerialPortReading2() {
             while (true) {
                 const { value, done } = await readStringUntil('\n')
                 if (value) {
-                    // console.log("### serialPortValue: ", value);
                     const [command, ...values] = value.split(" ")
                     handleSerialPortResponse(command, values.join(' '))
                 }
@@ -85,7 +84,10 @@ async function startSerialPortReading2() {
 }
 
 async function sendSerialData(data) {
-    console.log("### sendSerialData:", data)
+    if (!serialConfig.writer) {
+        alert("Not connected to device")
+        throw new Error("Not connected to device")
+    }
     await serialConfig.writer.write(data + '\n')
 }
 
@@ -127,7 +129,7 @@ function handleSerialPortResponse(command, data = '') {
         serialConfig.data += data + '\n'
     }
     if (command === '/file-done') {
-        updateConfigText(serialConfig.data)
+        updateConfigUI(serialConfig.data)
         serialConfig.data = ''
     }
 }

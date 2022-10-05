@@ -1,16 +1,21 @@
 
 const configText = document.getElementById('config-file-text');
 let configFormat = ''
-function updateConfigText(data) {
+
+function updateConfigUI(data) {
     configText.value = data
+    updateConfigFormat(data)
+    // todo add propeties check; add text config
+    updateInputFields(data)
+}
+
+function updateConfigFormat(data) {
     try {
         JSON.parse(data)
         configFormat = 'json'
     } catch (error) {
         configFormat = 'properties'
     }
-    // todo add propeties check; add text config
-    updateInputFields(data)
 }
 
 if (window.FileList && window.File) {
@@ -27,7 +32,7 @@ if (window.FileList && window.File) {
             reader.readAsText(file, "UTF-8");
 
             reader.onload = function (evt) {
-                updateConfigText(evt.target.result)
+                updateConfigUI(evt.target.result)
             }
         }
     });
@@ -44,7 +49,6 @@ function updateInputFields(data) {
 }
 
 function updateInputFieldsFromJson(dataJson) {
-    console.log('### updateInputFieldsFromJson:  dataJson:', dataJson)
     const configFieldsGroup = document.getElementById('config-file-fields-group');
     configFieldsGroup.innerHTML = ""
 
@@ -53,7 +57,6 @@ function updateInputFieldsFromJson(dataJson) {
 }
 
 function updateInputFieldsFromProperties(data) {
-    console.log('### updateInputFieldsFromProperties:  data:', data)
     const configFieldsGroup = document.getElementById('config-file-fields-group');
     configFieldsGroup.innerHTML = ""
 
@@ -97,7 +100,6 @@ function propsToField(text = '') {
 }
 
 function createConfigField(configField) {
-    console.log('### createConfigField', configField)
     const elements = createConfigElement(configField)
     return `<div class="ud-form-group">${elements}</div>`
 }
@@ -118,10 +120,11 @@ function createConfigElement(configField) {
     return ""
 }
 
-function refreshDataView() {
+function onDisplayModeChamge() {
     const showText = document.getElementById("display-mode").checked;
     if (showText === false) {
-        updateConfigText(configText.value)
+        updateConfigFormat(configText.value)
+        updateInputFields(configText.value)
         document.getElementById("config-file-fields-group").style.display = "block";
         document.getElementById("config-file-text-group").style.display = "none";
     } else {
@@ -131,11 +134,20 @@ function refreshDataView() {
     }
 }
 
+function refreshTextConfig() {
+    const showText = document.getElementById("display-mode").checked;
+    if (showText === false) {
+        updateConfigTextFromInputFields()
+    }
+}
+
 function onToggleConfig(cb) {
+    if (cb.checked) {
+        alert("To enter config mode: reboot device then press & hold '1'")
+    }
     const configDivs = document.getElementsByClassName("lnpos-config-div");
     Array.from(configDivs).forEach(div => {
         if (cb.checked) {
-            alert("To enter config mode: reboot device then press & hold '1'")
             div.classList.add('d-flex')
             div.classList.remove('d-none')
         } else {
@@ -148,16 +160,14 @@ function onToggleConfig(cb) {
 
 function updateTemplate(templateDropwdown) {
     const templateName = templateDropwdown.value
-    console.log('#### templateName', templateName)
     const template = templates[templateName]
     if (!template) {
         alert('No template found!')
         return
     }
-    configText.value = template.value
+    updateConfigUI(template.value + "") // make a copy
     const configFilePath = document.getElementById('config-file-path');
     configFilePath.value = template.fileName || ""
-    refreshDataView()
 }
 
 
