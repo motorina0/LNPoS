@@ -44,6 +44,7 @@ async function openSerialPort(config = { baudRate: 115200 }) {
         showMessage('Connected to serial port!')
         return true
     } catch (error) {
+        console.error(error)
         serialConfig.selectedPort = null
         showMessage('Cannot open serial port!')
         return false
@@ -79,7 +80,8 @@ async function startSerialPortReading2() {
                 if (done) return
             }
         } catch (error) {
-            console.log("### Serial port communication error!", error)
+            console.error(error)
+            console.log("### Serial port communication error!")
         }
     }
 }

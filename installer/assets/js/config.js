@@ -1,5 +1,9 @@
 async function downloadFromDevice(btn) {
     const configFile = document.getElementById("config-file-path").value
+    if (!serialConfig.writer) {
+        showMessage("Not connected to device")
+        return
+    }
     if (!configFile) {
         showMessage('No file path specified!')
         return
@@ -10,6 +14,7 @@ async function downloadFromDevice(btn) {
         serialConfig.data = ''
         await sendSerialData(`/file-read ${configFile}`)
     } catch (error) {
+        console.error(error)
         showMessage('Cannot download file: ' + configFile)
     } finally {
         await sleep(500)
@@ -20,13 +25,17 @@ async function downloadFromDevice(btn) {
 
 async function saveToDevice(btn) {
     const configFile = document.getElementById("config-file-path").value
-    const progressBar = document.getElementById("progress-bar-top")
-    const progressBarValue = document.getElementById("progress-bar-value")
-
+    if (!serialConfig.writer) {
+        showMessage("Not connected to device")
+    }
     if (!configFile) {
         showMessage('No file path specified!')
         return
     }
+
+    const progressBar = document.getElementById("progress-bar-top")
+    const progressBarValue = document.getElementById("progress-bar-value")
+
     progressBarValue.style.width = '0%'
     progressBar.classList.remove('d-none')
     btn.classList.add('d-none')
@@ -45,6 +54,7 @@ async function saveToDevice(btn) {
             i++
         }
     } catch (error) {
+        console.error(error)
         showMessage('Cannot update file!')
     } finally {
         progressBar.classList.add('d-none')

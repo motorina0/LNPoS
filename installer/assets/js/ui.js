@@ -14,6 +14,7 @@ function updateConfigFormat(data) {
         JSON.parse(data)
         configFormat = 'json'
     } catch (error) {
+        console.error(error)
         configFormat = 'properties'
     }
 }
