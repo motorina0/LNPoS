@@ -41,7 +41,6 @@ async function openSerialPort(config = { baudRate: 115200 }) {
         )
 
         serialConfig.writer = textEncoder.writable.getWriter()
-        console.log('### serialConfig', serialConfig)
 
     } catch (error) {
         serialConfig.selectedPort = null
