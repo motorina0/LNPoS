@@ -244,6 +244,11 @@ char keys[rows][cols] = {
 byte rowPins[rows] = {21, 27, 26, 22}; //connect to the row pinouts of the keypad
 byte colPins[cols] = {33, 32, 25};     //connect to the column pinouts of the keypad
 
+struct KeyValue {
+  String key;
+  String value;
+};
+
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, rows, cols);
 int checker = 0;
 char maxdig[20];
@@ -352,8 +357,9 @@ void setup()
 
   // start portal (any key pressed on startup)
   const char key = keypad.getKey();
-  if (key != NO_KEY)
-  {
+  if (key == '1') {
+    configOverSerialPort();
+  } else if (key != NO_KEY){
     // handle access point traffic
     server.on("/", []() {
       String content = "<h1>LNPoS</br>Free open-source bitcoin PoS</h1>";
@@ -840,13 +846,21 @@ void getKeypad(bool isATMPin, bool justKey, bool isLN, bool isATMNum)
 }
 
 ///////////DISPLAY///////////////
-void portalLaunch()
+void portalLaunch(){
+  configLaunch("AP LAUNCHED");
+}
+
+void serialLaunch(){
+  configLaunch("USB Config");
+}
+
+void configLaunch(String title)
 {
   tft.fillScreen(TFT_BLACK);
   tft.setTextColor(TFT_PURPLE, TFT_BLACK);
   tft.setTextSize(3);
-  tft.setCursor(20, 40);
-  tft.println("AP LAUNCHED");
+  tft.setCursor(20, 30);
+  tft.println(title);
 
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setCursor(0, 65);
@@ -1193,9 +1207,9 @@ void logo()
   tft.print("LN");
   tft.setTextColor(TFT_PURPLE, TFT_BLACK);
   tft.print("PoS");
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setTextSize(2);
   tft.setCursor(0, 80);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.print("Powered by LNbits");
 }
 
@@ -1787,27 +1801,27 @@ bool isPoweredExternally() {
  */
 void sleepAnimation() {
     printSleepAnimationFrame("(o.o)", 500);
-    printSleepAnimationFrame("(-.-)", 500);
-    printSleepAnimationFrame("(-.-)z", 250);
-    printSleepAnimationFrame("(-.-)zz", 250);
-    printSleepAnimationFrame("(-.-)zzz", 250);
-    tft.fillScreen(TFT_BLACK);
+printSleepAnimationFrame("(-.-)", 500);
+printSleepAnimationFrame("(-.-)z", 250);
+printSleepAnimationFrame("(-.-)zz", 250);
+printSleepAnimationFrame("(-.-)zzz", 250);
+tft.fillScreen(TFT_BLACK);
 }
 
 void wakeAnimation() {
-    printSleepAnimationFrame("(-.-)", 100);
-    printSleepAnimationFrame("(o.o)", 200);
-    tft.fillScreen(TFT_BLACK);
+  printSleepAnimationFrame("(-.-)", 100);
+  printSleepAnimationFrame("(o.o)", 200);
+  tft.fillScreen(TFT_BLACK);
 }
 
 /**
- * Print the line of the animation
- */
+   Print the line of the animation
+*/
 void printSleepAnimationFrame(String text, int wait) {
   tft.fillScreen(TFT_BLACK);
   tft.setCursor(5, 80);
   tft.setTextSize(4);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK); 
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
   //tft.setFreeFont(BIGFONT);
   tft.println(text);
   delay(wait);
