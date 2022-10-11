@@ -13,99 +13,94 @@ shorten=true`,
         fileName: "elements.json",
         value: stringifyNice([
             {
-                "name": "text",
-                "type": "ACText",
-                "value": "LNPoS options",
-                "style": "font-family:Arial;font-size:16px;font-weight:400;color:#191970;margin-botom:15px;"
-            },
-            {
                 "name": "password",
                 "type": "ACInput",
+                "value": "ToTheMoon1",
                 "label": "Password for PoS AP WiFi",
-                "value": "ToTheMoon1"
-            },
-            {
-                "name": "offline",
-                "type": "ACText",
-                "value": "Onchain *optional",
-                "style": "font-family:Arial;font-size:16px;font-weight:400;color:#191970;margin-botom:15px;"
+                "pattern": "",
+                "placeholder": "",
+                "style": "",
+                "apply": "text"
             },
             {
                 "name": "masterkey",
                 "type": "ACInput",
-                "label": "Master Public Key"
-            },
-            {
-                "name": "heading1",
-                "type": "ACText",
-                "value": "Lightning *optional",
-                "style": "font-family:Arial;font-size:16px;font-weight:400;color:#191970;margin-botom:15px;"
+                "value": "",
+                "label": "Master Public Key",
+                "pattern": "",
+                "placeholder": "",
+                "style": "",
+                "apply": "text"
             },
             {
                 "name": "server",
                 "type": "ACInput",
-                "label": "LNbits Server"
+                "value": "",
+                "label": "LNbits Server",
+                "pattern": "",
+                "placeholder": "",
+                "style": "",
+                "apply": "text"
             },
             {
                 "name": "invoice",
                 "type": "ACInput",
-                "label": "Wallet Invoice Key"
+                "value": "",
+                "label": "Wallet Invoice Key",
+                "pattern": "",
+                "placeholder": "",
+                "style": "",
+                "apply": "text"
             },
             {
                 "name": "lncurrency",
                 "type": "ACInput",
-                "label": "PoS Currency ie EUR"
-            },
-            {
-                "name": "heading2",
-                "type": "ACText",
-                "value": "Offline Lightning *optional",
-                "style": "font-family:Arial;font-size:16px;font-weight:400;color:#191970;margin-botom:15px;"
+                "value": "",
+                "label": "PoS Currency ie EUR",
+                "pattern": "",
+                "placeholder": "",
+                "style": "",
+                "apply": "text"
             },
             {
                 "name": "lnurlpos",
                 "type": "ACInput",
-                "label": "LNURLPoS String"
-            },
-            {
-                "name": "heading3",
-                "type": "ACText",
-                "value": "Offline Lightning *optional",
-                "style": "font-family:Arial;font-size:16px;font-weight:400;color:#191970;margin-botom:15px;"
+                "value": "",
+                "label": "LNURLPoS String",
+                "pattern": "",
+                "placeholder": "",
+                "style": "",
+                "apply": "text"
             },
             {
                 "name": "lnurlatm",
                 "type": "ACInput",
-                "label": "LNURLATM String"
+                "value": "",
+                "label": "LNURLATM String",
+                "pattern": "",
+                "placeholder": "",
+                "style": "",
+                "apply": "text"
             },
             {
                 "name": "lnurlatmms",
                 "type": "ACInput",
                 "value": "mempool.space",
-                "label": "mempool.space server"
+                "label": "mempool.space server",
+                "pattern": "",
+                "placeholder": "",
+                "style": "",
+                "apply": "text"
             },
             {
                 "name": "lnurlatmpin",
                 "type": "ACInput",
                 "value": "878787",
-                "label": "LNURLATM pin String"
-            },
-            {
-                "name": "load",
-                "type": "ACSubmit",
-                "value": "Load",
-                "uri": "/posconfig"
-            },
-            {
-                "name": "save",
-                "type": "ACSubmit",
-                "value": "Save",
-                "uri": "/save"
-            },
-            {
-                "name": "adjust_width",
-                "type": "ACElement",
-                "value": "<script type='text/javascript'>window.onload=function(){var t=document.querySelectorAll('input[]');for(i=0;i<t.length;i++){var e=t[i].getAttribute('placeholder');e&&t[i].setAttribute('size',e.length*.8)}};</script>"
+                "label": "LNURLATM pin String",
+                "pattern": "",
+                "placeholder": "",
+                "style": "",
+                "apply": "text"
             }
         ])
     }
